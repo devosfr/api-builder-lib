@@ -1,0 +1,23 @@
+{
+  "name": "@oseiasfreitas/api-builder",
+  "version": "1.0.0",
+  "description": "A test lib",
+  "main": "index.js",
+  "scripts": {
+    "test": "hello()"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devosfr/front-builder-lib.git"
+  },
+  "author": "Oséias Freitas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devosfr/front-builder-lib/issues"
+  },
+  "homepage": "https://github.com/devosfr/front-builder-lib#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "prompt-sync": "^4.2.0"
+  }
+}

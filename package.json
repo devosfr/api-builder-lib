@@ -1,0 +1,26 @@
+{
+  "name": "@oseiasfreitas/api-builder",
+  "version": "1.0.0",
+  "description": "A test library",
+  "main": "index.js",
+  "dependencies": {
+    "ansi-regex": "^4.1.1",
+    "fs": "^0.0.1-security",
+    "prompt-sync": "^4.2.0",
+    "strip-ansi": "^5.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "hello()"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devosfr/api-builder-lib.git"
+  },
+  "author": "Oséias Freitas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devosfr/api-builder-lib/issues"
+  },
+  "homepage": "https://github.com/devosfr/api-builder-lib#readme"
+}
