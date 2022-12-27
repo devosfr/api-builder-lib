@@ -1,12 +1,12 @@
 const Build = require('@oseiasfreitas/front-builder');
 const entry = require('prompt-sync')({sigint: true});
 let value= null;
-let main = null;
+let flowName = null;
 
-value = entry('Enter the directory hierarchy: ');
-console.log('Hierarchy: ' + value);
+flowName = entry('Enter the flow name: ');
+console.log('Flow name: ' + flowName);
 
-main = entry('Enter the directory main folder: ');
-console.log('Main folder: ' + main);
+endpointType = entry('What is the endpoint type? ');
+console.log('Hierarchy: ' + endpointType)
 
-Build.makePage(value, main);
+Build.makePage(flowName , endpointType);
