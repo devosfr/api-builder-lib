@@ -1,6 +1,6 @@
 {
   "name": "@oseiasfreitas/api-builder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A test library",
   "main": "index.js",
   "dependencies": {
