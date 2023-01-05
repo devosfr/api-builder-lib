@@ -1,6 +1,5 @@
 const Build = require('@oseiasfreitas/front-builder');
 const entry = require('prompt-sync')({sigint: true});
-let value= null;
 let flowName = null;
 
 flowName = entry('Enter the flow name: ');
