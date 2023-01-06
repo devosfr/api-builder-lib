@@ -5,7 +5,7 @@ let flowName = null;
 flowName = entry('Enter the flow name: ');
 console.log('Flow name: ' + flowName);
 
-endpointType = entry('What is the endpoint type? ');
+endpointType = entry('What is the endpoint type? (get, getById, post, put or delete): ');
 console.log('Hierarchy: ' + endpointType)
 
 Build.makePage(flowName , endpointType);

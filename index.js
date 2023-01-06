@@ -9,61 +9,96 @@ module.exports.makePage = (flowName, endpointType) => {
    basePath = '${basePath}';
    routeFile = `_${flowName}.js`;
    controllerFile = `${flowName}.js`;
-   let routeFileContent = contents.routeFileContent(basePath, flowName);
 
-   let persistControllerFileContent = contents.persistControllerFileContent();
-
-   let retriveControllerFileContent = contents.retriveControllerFileContent();
-
-
-   // To create a folder
-   controllersPath = `src/api/controllers/${flowName}/`;
-   fs.mkdirSync(controllersPath);
+   let routeFileContent = contents.routeFileContent(basePath, flowName, endpointType);
    // Making route
    writeFile(`src/api/routes/${routeFile}`, routeFileContent);
 
-   // Making controller
-   writeFile(controllersPath + 'persist.controller.js', persistControllerFileContent);
-   writeFile(controllersPath + 'retrieve.controller.js', retriveControllerFileContent);
+   // To create controller folder
+   controllersPath = `src/api/controllers/${flowName}/`;
+   if (fs.existsSync(controllersPath)) {
+      console.log('Directory exists!')
+    } else {
+      console.log('Directory not found.');
+      fs.mkdirSync(controllersPath);
+    }
+   // mark
+
+   // Making controllers
+   let persistControllerFileContent = null;
+   let retriveControllerFileContent = null;
+   if (endpointType === 'post' || endpointType === 'put') {
+      persistControllerFileContent = contents.persistControllerFileContent(endpointType);      
+      writeFile(controllersPath + 'persist.controller.js', persistControllerFileContent);
+   } else {
+      retriveControllerFileContent = contents.retriveControllerFileContent(endpointType);
+      writeFile(controllersPath + 'retrieve.controller.js', retriveControllerFileContent);
+   }  
+   
+   let useCaseIndexFileContent = contents.useCaseIndexFileContent(flowName);
+   let useCaseGenericFileContent = contents.useCaseGenericFileContent(flowName);
+  
+   // To create use-case folder
+   useCasesPath = `src/use-cases/${flowName}/`;
+   fs.mkdirSync(useCasesPath);
 
    let data = fs.readFileSync('src/api/routes/index.js')
 
    let arrayData = data.toString().split(' ');
-
+   
    let newDataString = null;
    arrayData.forEach(element => {
-      switch (element) {
-         case 'const':
-            newDataString = newDataString ? newDataString + element + ' ' : element
-            break;
-         default:
-            newDataString = element === null ? '' : newDataString + ' ' + element
-            if (element.includes('basePath)=>{')) {
-               newDataString = newDataString + `  ${flowName}.init(instance, basePath);\r\n`
-            }
-            break;
+
+      if (element !== '// routes') {
+         switch (element) {
+            case 'const':
+               newDataString = newDataString ? newDataString + element + ' ' : element
+               break;
+            default:
+               newDataString = element === null ? '' : newDataString + ' ' + element
+               if (element.includes('{')) {
+                  newDataString = newDataString + `  ${flowName}.init(instance, basePath);\r\n`
+               }
+               break;
+         }  
       }
    });
 
-   console.log('TEST 2 newDataString: ', newDataString);
    newDataString = newDataString.replace('null','');
 
-   // TODO: Set method type 
    let newData = `const ${flowName} = require('./_${flowName}');\n` + newDataString;
 
    fs.unlink('src/api/routes/index.js', function (err) {
       if (err) {
           throw err;
       }
-      console.log('Removed with Success!');
+      // console.log('Removed with Success!');
     });
 
    fs.writeFile('src/api/routes/index.js', `${newData}`, function (err) {
       if (err) {
           throw err;
       }
-      console.log('Created with Success!');
+      // console.log('Created with Success!');
     });
+
+    //TODO: create use-case
+
+   // Error Bellow
+   fs.writeFile(useCasesPath + 'index.js', useCaseIndexFileContent, function (err) {
+      if (err) {
+          throw err;
+      }
+      // console.log('Created with Success!');
+    });
+
+   fs.writeFile(useCasesPath + `_${flowName}.js`, useCaseGenericFileContent, function (err) {
+      if (err) {
+          throw err;
+      }
+      // console.log('Created with Success!');
+    });
+  
 
 };
 
